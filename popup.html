@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            width: max-content;
+            font-weight: 600;
+        }
+
+        .bg {
+            background-image: linear-gradient(to bottom right, #fff0de, #ebcab3);
+            border-radius: 5px;
+            padding: 2rem;
+            width: 36rem;
+        }
+
+        select {
+            text-transform: none;
+            padding: 10px;
+            background: rgb(255, 50, 50);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .removeBtn {
+            cursor: pointer;
+        }
+
+        #mailId {
+            width: 15rem;
+            border-radius: 7px;
+            padding: 7px;
+            padding-left: 10px;
+            margin: auto;
+        }
+
+        input {
+            width: 8rem;
+            border-radius: 7px;
+            padding: 7px;
+            padding-left: 10px;
+            outline: none;
+        }
+
+        input:focus {
+            outline: none !important;
+            border-color: #a58874;
+            box-shadow: 0 0 12px #a58874;
+        }
+
+        label {
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        .heading {
+            font-size: 3rem;
+            font-family: math;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            margin: 0;
+            padding-left: 0;
+            margin-right: 0;
+        }
+
+        #products-list-heading {
+            font-size: 2rem;
+        }
+
+        .table>tbody>tr>td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        #no-products > button{
+            width: 15rem;
+            text-align: center;
+            margin: auto;
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: larger;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+        <h1 class="heading">Notification Lord</h1>
+
+        <div class="container">
+            <span>
+                <input type="email" name="mailId" id="mailId" placeholder="Enter a mail-id">
+            </span>
+            <div class="d-flex justify-content-center gap-3 my-1">
+                <input type="text" name="timer" id="days" placeholder="Days">
+                <input type="text" name="timer" id="hours" placeholder="Hours">
+                <input type="text" name="timer" id="minutes" placeholder="Minutes">
+            </div>
+        </div>
+
+        <div id="no-products" style="display: none; margin: auto;">
+            <button class="btn btn-warning">No Products :(</button>
+        </div>
+
+        <table id="table-bg" class="table table-hover table-info table-striped table-bordered caption-top">
+            <caption id="products-list-heading">Products List</caption>
+
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Product</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>100</td>
+                    <td>This is sample product</td>
+                    <td><button class="btn-danger">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script> -->
+    <script src="popup.js"></script>
+</body>
+
+</html>
