@@ -119,6 +119,7 @@ async function fillTable(newProduct) {
                 deleteBtn.addEventListener('click', (e) => deleteRow(e));
                 deleteBtn.classList.add('btn');
                 deleteBtn.classList.add('btn-danger');
+                deleteBtn.classList.add('fw-bold');
                 fourthCol.appendChild(deleteBtn);
 
                 let thirdCol = newRow.insertCell(0);

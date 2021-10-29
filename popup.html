@@ -39,7 +39,6 @@
 
         #mailId {
             width: 15rem;
-            border-radius: 7px;
             padding: 7px;
             padding-left: 10px;
             margin: auto;
@@ -51,6 +50,7 @@
             padding: 7px;
             padding-left: 10px;
             outline: none;
+            border: solid 1px;
         }
 
         input:focus {
@@ -87,7 +87,7 @@
             text-align: center;
         }
 
-        #no-products > button{
+        #no-products>button {
             width: 15rem;
             text-align: center;
             margin: auto;
@@ -95,21 +95,41 @@
             padding: 1rem;
             font-size: larger;
         }
+
+        .input-group {
+            width: 150px;
+        }
     </style>
 </head>
 
 <body>
     <div class="bg">
         <h1 class="heading">Notification Lord</h1>
-
+        
         <div class="container">
             <span>
-                <input type="email" name="mailId" id="mailId" placeholder="Enter a mail-id">
+                <div class="input-group mb-3" style="width: max-content;">
+                    <span class="input-group-text" id="basic-addon1">Mail-id</span>
+                    <input type="email" class="form-control" placeholder="Enter a mail-id" aria-describedby="basic-addon1"
+                        name="mailId" id="mailId">
+                </div>
             </span>
-            <div class="d-flex justify-content-center gap-3 my-1">
-                <input type="text" name="timer" id="days" placeholder="Days">
-                <input type="text" name="timer" id="hours" placeholder="Hours">
-                <input type="text" name="timer" id="minutes" placeholder="Minutes">
+            <div class="d-flex justify-content-center gap-3">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Days</span>
+                    <input type="text" class="form-control" placeholder="Days" aria-describedby="basic-addon1" name="timer"
+                        id="days">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Hours</span>
+                    <input type="text" class="form-control" placeholder="Hours" aria-describedby="basic-addon1" name="timer"
+                        id="hours">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Minutes</span>
+                    <input type="text" class="form-control" placeholder="Minutes" aria-describedby="basic-addon1" name="timer"
+                        id="minutes">
+                </div>
             </div>
         </div>
 

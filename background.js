@@ -20,9 +20,9 @@ async function fillTable(newProduct) {
         }
 
         if (products.length == 0) {
-            
+
         } else {
-            
+
         }
 
         chrome.storage.local.set({ key: products }, function () {
@@ -40,7 +40,7 @@ async function getMailId() {
         clearInterval(intervalFunction);
         if (!isNaN(totalTime)) {
             if (totalTime >= 0 && mailId != '') {
-                intervalFunction = setInterval(checkPrices, totalTime);
+                // intervalFunction = setInterval(checkPrices, totalTime);
             }
         }
     });
@@ -64,7 +64,7 @@ async function getTime() {
 
     if (!isNaN(totalTime)) {
         if (totalTime >= 0 && mailId != '') {
-            intervalFunction = setInterval(checkPrices, totalTime);
+            // intervalFunction = setInterval(checkPrices, totalTime);
         }
     }
 }
@@ -77,6 +77,7 @@ async function getTime() {
 
 chrome.runtime.onMessage.addListener(
     async function (product, sender, sendResponse) {
+        console.log(product);
 
         if (product.message == 'product') {
             let newProduct = {
@@ -84,6 +85,7 @@ chrome.runtime.onMessage.addListener(
                 link: sender.tab.url,
                 name: product.productName
             }
+
 
             fillTable(newProduct);
             sendResponse();
