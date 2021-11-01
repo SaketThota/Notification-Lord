@@ -6,6 +6,8 @@ module.exports = {
     },
     mode: "development",
     resolve: {
-        fallback: { "path": false, "os": false, "fs": false }
+        fallback: {
+            "path": false, "os": false, "fs": false
+        }
     }
 };

@@ -2,7 +2,13 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 const sgMail = require('@sendgrid/mail');
-const SENDGRID_API_KEY = "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";
+// saket
+// const SENDGRID_API_KEY = "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";
+// adarsh
+// const SENDGRID_API_KEY = "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";
+
+// chenna
+const SENDGRID_API_KEY = "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";
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 var mailId, days, hours, minutes, intervalFunction;
@@ -17,12 +23,6 @@ async function fillTable(newProduct) {
 
         if (newProduct) {
             products.push(newProduct);
-        }
-
-        if (products.length == 0) {
-
-        } else {
-
         }
 
         chrome.storage.local.set({ key: products }, function () {
@@ -46,39 +46,72 @@ async function getMailId() {
     });
 }
 
+async function checkPrices() {
+    await chrome.storage.local.get(['key'], function (res) {
+        let allProducts = res.key;
+
+        if (allProducts) {
+            for (p of allProducts) {
+                let url = p.link;
+                axios.get(url)
+                    .then(res => {
+                        const $ = cheerio.load(res.request.response);
+                        let ourPrice = $('#priceblock_ourprice').text().trim();
+                        let dealPrice = $('#priceblock_dealprice').text().trim();
+                        let expectedPrice = parseInt(p.price);
+                        let curPrice = (dealPrice ? dealPrice : ourPrice);
+                        curPrice = curPrice.split('.')[0];
+                        curPrice = parseInt(curPrice.replace(/\D/g, ''));
+
+                        if (curPrice <= expectedPrice) {
+                            let temp_message = `Price on product ${p.link} dropped to Rs.${curPrice}`;
+                            console.log(temp_message);
+                            // sendEmail(`Price drop on ${p.name}`, `Price on product ${p.link} dropped to Rs.${curPrice}`);
+                        }
+                    })
+                    .catch(err => console.log(err));
+            }
+        }
+
+    })
+}
+
 async function getTime() {
     clearInterval(intervalFunction);
 
     await chrome.storage.local.get(['days'], function (res) {
         days = res.days;
-    })
-    await chrome.storage.local.get(['hours'], function (res) {
-        hours = res.hours;
-    })
-    await chrome.storage.local.get(['minutes'], function (res) {
-        minutes = res.minutes;
+        chrome.storage.local.get(['hours'], function (res) {
+            hours = res.hours;
+            chrome.storage.local.get(['minutes'], function (res) {
+                minutes = res.minutes;
+            })
+        })
     })
 
     totalTime = (minutes * 60) + (hours * 60 * 60) + (days * 24 * 60 * 60);
     totalTime = (totalTime * 1000)
 
+    // if (isNaN(totalTime)) {
+    //     totalTime = 60000;
+    // }
+
     if (!isNaN(totalTime)) {
         if (totalTime >= 0 && mailId != '') {
-            // intervalFunction = setInterval(checkPrices, totalTime);
+            console.log(totalTime);
+            intervalFunction = setInterval(checkPrices, totalTime);
         }
     }
 }
 
 (async () => {
     await fillTable(null);
-    await getTime();
-    await getMailId();
+    // await getTime();
+    // await getMailId();
 })()
 
 chrome.runtime.onMessage.addListener(
     async function (product, sender, sendResponse) {
-        console.log(product);
-
         if (product.message == 'product') {
             let newProduct = {
                 price: product.productPrice,
@@ -126,8 +159,8 @@ async function sendEmail(subject, body) {
                     }
                 ],
                 from: {
-                    email: "saketthota98@gmail.com",
-                    name: "Notification-Lord"
+                    email: "shravanchenna6@gmail.com",
+                    name: "Notification Lord"
                 },
                 subject,
                 content: [
@@ -139,35 +172,6 @@ async function sendEmail(subject, body) {
             })
         });
     } catch (e) {
-        e => console.log(e);
+        // e => console.log(e);
     }
-}
-
-async function checkPrices() {
-    await chrome.storage.local.get(['key'], function (res) {
-        let allProducts = res.key;
-
-        if (allProducts) {
-            for (p of allProducts) {
-                let url = p.link;
-                axios.get(url)
-                    .then(res => {
-                        const $ = cheerio.load(res.request.response);
-                        let ourPrice = $('#priceblock_ourprice').text().trim();
-                        let dealPrice = $('#priceblock_dealprice').text().trim();
-                        let expectedPrice = parseInt(p.price);
-                        let curPrice = (dealPrice ? dealPrice : ourPrice);
-                        curPrice = curPrice.split('.')[0];
-                        curPrice = parseInt(curPrice.replace(/\D/g, ''));
-
-                        if (curPrice <= expectedPrice) {
-                            console.log("Working");
-                            // sendEmail(`Price drop on ${p.name}`, `Price on product ${p.link} dropped to Rs.${curPrice}`);
-                        }
-                    })
-                    .catch(err => console.log(err));
-            }
-        }
-
-    })
 }
